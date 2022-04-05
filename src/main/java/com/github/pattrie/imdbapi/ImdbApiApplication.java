@@ -1,6 +1,12 @@
 package com.github.pattrie.imdbapi;
 
+import static j2html.TagCreator.body;
+import static j2html.TagCreator.h1;
+import static j2html.TagCreator.img;
+
+import com.github.pattrie.imdbapi.html.HTMLGenerator;
 import com.github.pattrie.imdbapi.model.Movie;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -33,7 +39,7 @@ public class ImdbApiApplication {
 
     final List<String> titles = getList(movies, "title");
     final List<String> images = getList(movies, "image");
-    final List<String> ratings = getList(movies, "imDbRatingCount");
+    final List<String> ratings = getList(movies, "imDbRating\"");
     final List<String> years = getList(movies, "year");
 
     final List<Movie> movieList = new ArrayList<>();
@@ -43,17 +49,17 @@ public class ImdbApiApplication {
       final String image = images.get(i);
       final String rating = ratings.get(i);
       final String year = years.get(i);
-      movieList.add(new Movie(title, image, Long.parseLong(rating), Long.parseLong(year)));
-      System.out.println(i + 1 + " :: " + movieList.get(i));
-      // Decidi utilizar o constructor com os atributos obrigatórios porque o setter permitiria
-      // alterar o objeto Movie, e somente penso que deve ser alterado conforme novas
-      // requisições ao endpoint
-      // Não acho que precisa ser interfaceado e deve ser imutável
+      movieList.add(new Movie(title, image, Double.parseDouble(rating), Long.parseLong(year)));
     }
+
+    HTMLGenerator htmlGenerator =
+        new HTMLGenerator(new PrintWriter("src/main/resources/movies.html"));
+
+    htmlGenerator.generate(movieList);
   }
 
-  private static List<String> getList(String[] movies, String information) {
-    List<String> list = new ArrayList<>();
+  private static List<String> getList(final String[] movies, final String information) {
+    final List<String> list = new ArrayList<>();
 
     for (String movie : movies) {
       if (movie.contains(information)) {
@@ -66,7 +72,7 @@ public class ImdbApiApplication {
     return list;
   }
 
-  private static String[] getMovies(String moviesJson) {
+  private static String[] getMovies(final String moviesJson) {
     moviesJson.substring(moviesJson.indexOf("[") + 1, moviesJson.indexOf("]"));
     return moviesJson.split(",");
   }
