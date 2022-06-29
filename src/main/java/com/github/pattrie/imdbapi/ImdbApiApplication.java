@@ -1,16 +1,7 @@
 package com.github.pattrie.imdbapi;
 
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.h1;
-import static j2html.TagCreator.img;
-
-import com.github.pattrie.imdbapi.html.HTMLGenerator;
 import com.github.pattrie.imdbapi.model.Movie;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,17 +16,11 @@ public class ImdbApiApplication {
     Scanner scanner = new Scanner(System.in);
 
     System.out.print("Insira a apiKey: ");
-    String apiKey = scanner.nextLine();
+    final String apiKey = scanner.nextLine();
 
-    final URI uri = new URI(String.format("https://imdb-api.com/en/API/Top250Movies/%s", apiKey));
-    final HttpRequest request = HttpRequest.newBuilder().uri(uri).GET().build();
+    final String moviesJson = new ImdbApiClient(apiKey).getBody();
 
-    final HttpClient client = HttpClient.newHttpClient();
-
-    final HttpResponse<String> response =
-        client.send(request, HttpResponse.BodyHandlers.ofString());
-
-    final String[] movies = getMovies(response.body());
+    final String[] movies = new ImdbMovieJsonParser(moviesJson).getMovies();
 
     final List<String> titles = getList(movies, "title");
     final List<String> images = getList(movies, "image");
@@ -70,10 +55,5 @@ public class ImdbApiApplication {
       }
     }
     return list;
-  }
-
-  private static String[] getMovies(final String moviesJson) {
-    moviesJson.substring(moviesJson.indexOf("[") + 1, moviesJson.indexOf("]"));
-    return moviesJson.split(",");
   }
 }

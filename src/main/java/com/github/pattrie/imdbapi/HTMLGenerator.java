@@ -1,4 +1,4 @@
-package com.github.pattrie.imdbapi.html;
+package com.github.pattrie.imdbapi;
 
 import static j2html.TagCreator.head;
 import static j2html.TagCreator.link;
@@ -39,7 +39,7 @@ public class HTMLGenerator {
         movie -> {
           final String body =
               String.format(
-                      "\n<div class=\"card text-white bg-dark mb-3\" style=\"width: 18rem;\">\n"
+                  "\n<div class=\"card text-white bg-dark mb-3\" style=\"width: 18rem;\">\n"
                       + " <div class=\"card-body\">\n"
                       + "    <h5 class=\"card-text\">%s</h5>\n"
                       + "    <img class=\"card-img-top\" src=%s alt=\"%s\">\n"
