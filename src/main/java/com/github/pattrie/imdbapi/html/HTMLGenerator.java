@@ -1,4 +1,4 @@
-package com.github.pattrie.imdbapi;
+package com.github.pattrie.imdbapi.html;
 
 import static j2html.TagCreator.head;
 import static j2html.TagCreator.link;
@@ -10,7 +10,8 @@ import java.io.Writer;
 import java.util.List;
 
 public class HTMLGenerator {
-  private Writer writer;
+
+  private final Writer writer;
 
   public HTMLGenerator(Writer writer) {
     this.writer = writer;

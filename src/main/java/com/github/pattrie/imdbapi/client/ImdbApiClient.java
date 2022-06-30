@@ -1,4 +1,4 @@
-package com.github.pattrie.imdbapi;
+package com.github.pattrie.imdbapi.client;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,11 +7,11 @@ import java.net.http.HttpResponse;
 
 public class ImdbApiClient {
 
+  private final String apiKey;
+
   public ImdbApiClient(String apiKey) {
     this.apiKey = apiKey;
   }
-
-  private String apiKey;
 
   public String getBody() throws Exception {
     final URI uri = new URI(String.format("https://imdb-api.com/en/API/Top250Movies/%s", apiKey));
@@ -19,9 +19,6 @@ public class ImdbApiClient {
     final HttpRequest request = HttpRequest.newBuilder().uri(uri).GET().build();
     final HttpClient client = HttpClient.newHttpClient();
 
-    final HttpResponse<String> response =
-        client.send(request, HttpResponse.BodyHandlers.ofString());
-
-    return response.body();
+    return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
   }
 }
