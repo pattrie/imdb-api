@@ -22,7 +22,7 @@ public class ImdbApiApplication {
 
     final String moviesJson = new ImdbApiClient(apiKey).getBody();
 
-    final List<Movie> movies = new ImdbMovieJsonParser(moviesJson).getMovies();
+    final List<Movie> movies = new ImdbMovieJsonParser(moviesJson).parse();
 
     new HTMLGenerator(new PrintWriter("src/main/resources/movies.html")).generate(movies);
   }

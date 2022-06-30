@@ -1,6 +1,8 @@
 package com.github.pattrie.imdbapi.model;
 
-public class Movie {
+import com.github.pattrie.imdbapi.Content;
+
+public class Movie implements Content {
   private String title;
   private String urlImage;
   private Double rating;
@@ -13,22 +15,6 @@ public class Movie {
     this.year = year;
   }
 
-  public String getTitle() {
-    return title;
-  }
-
-  public String getUrlImage() {
-    return urlImage;
-  }
-
-  public Double getRating() {
-    return rating;
-  }
-
-  public Long getYear() {
-    return year;
-  }
-
   @Override
   public String toString() {
     return "Movie{"
@@ -37,5 +23,25 @@ public class Movie {
         + ", rating=" + rating
         + ", year=" + year
         + '}';
+  }
+
+  @Override
+  public String title() {
+    return title;
+  }
+
+  @Override
+  public String urlImage() {
+    return urlImage;
+  }
+
+  @Override
+  public Double rating() {
+    return rating;
+  }
+
+  @Override
+  public Long year() {
+    return year;
   }
 }

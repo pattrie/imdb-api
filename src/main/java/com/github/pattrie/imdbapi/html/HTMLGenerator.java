@@ -47,11 +47,11 @@ public class HTMLGenerator {
                       + "    <p class=\"card-text\">Rating: %s Year: %s</p>\n"
                       + " </div>\n"
                       + "</div>\n",
-                  movie.getTitle(),
-                  movie.getUrlImage(),
-                  movie.getTitle(),
-                  movie.getRating(),
-                  movie.getYear());
+                  movie.title(),
+                  movie.urlImage(),
+                  movie.title(),
+                  movie.rating(),
+                  movie.year());
 
           try {
             writer.append(body);
