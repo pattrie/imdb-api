@@ -4,7 +4,7 @@ import static j2html.TagCreator.head;
 import static j2html.TagCreator.link;
 import static j2html.TagCreator.meta;
 
-import com.github.pattrie.imdbapi.model.Movie;
+import com.github.pattrie.imdbapi.Content;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
@@ -17,7 +17,7 @@ public class HTMLGenerator {
     this.writer = writer;
   }
 
-  public void generate(final List<Movie> movies) throws IOException {
+  public void generate(final List<? extends Content> movies) throws IOException {
 
     final String head =
         head(

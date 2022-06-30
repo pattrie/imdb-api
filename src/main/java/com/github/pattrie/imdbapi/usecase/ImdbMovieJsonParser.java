@@ -1,10 +1,12 @@
 package com.github.pattrie.imdbapi.usecase;
 
+import com.github.pattrie.imdbapi.Content;
+import com.github.pattrie.imdbapi.JsonParser;
 import com.github.pattrie.imdbapi.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImdbMovieJsonParser {
+public class ImdbMovieJsonParser implements JsonParser {
 
   private final String moviesJson;
 
@@ -12,7 +14,8 @@ public class ImdbMovieJsonParser {
     this.moviesJson = moviesJson;
   }
 
-  public List<Movie> getMovies() {
+  @Override
+  public List<? extends Content> parse() {
     final String[] movies = formatMovies();
 
     final List<String> titles = getList(movies, "title");
@@ -51,5 +54,4 @@ public class ImdbMovieJsonParser {
     }
     return list;
   }
-
 }
